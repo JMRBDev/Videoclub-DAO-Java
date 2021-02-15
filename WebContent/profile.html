@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi perfil - Videoclub Jose Rosendo</title>
+
+<!-- JQuery -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<a class="navbar-brand" id="navbar-brand" href="">Perfil - Jose
+			Rosendo</a> <span class="badge badge-light mr-3" id="user-saldo"></span>
+	</nav>
+
+	<main class="p-4 d-flex flex-column align-items-center">
+
+		<h1>Historial de alquileres</h1>
+
+		<table class="table d-none" id="historial-table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Título</th>
+					<th scope="col">Género</th>
+					<th scope="col">Estreno</th>
+					<th scope="col">Fecha</th>
+				</tr>
+			</thead>
+			<tbody id="historial-tbody">
+
+			</tbody>
+		</table>
+		<div id="historial-vacio" class="alert alert-info" role="alert">
+			No hay elementos en el historial</div>
+
+
+		<h1 class="mt-3">Editar perfil</h1>
+
+		<div class="card" style="width: 40vw;">
+			<div class="card-body">
+				<form method="GET" id="form-modificar" class="pb-4">
+					<div class="form-group">
+						<label for="input-username">Username</label> <input type="text"
+							class="form-control disabled" id="input-username"
+							placeholder="Username" readonly>
+					</div>
+					<div class="form-group">
+						<label for="input-contrasena">Contraseña</label> <input
+							type="password" class="form-control" id="input-contrasena"
+							placeholder="Contraseña" required>
+					</div>
+					<div class="form-group">
+						<label for="input-nombre">Nombre</label> <input type="text"
+							class="form-control" id="input-nombre" placeholder="Nombre"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="input-apellidos">Apellidos</label> <input type="text"
+							class="form-control" id="input-apellidos" placeholder="Apellidos"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="input-email">Email</label> <input type="email"
+							class="form-control" id="input-email" placeholder="Email"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="input-saldo">Saldo</label> <input type="number"
+							step="any" class="form-control" id="input-saldo" placeholder="0"
+							required>
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox"
+								id="input-premium"> <label class="form-check-label"
+								for="input-premium"> Premium </label>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary" id="modificar-btn">Guardar
+						datos</button>
+				</form>
+
+				<div id="modificar-error" class="alert alert-danger d-none"
+					role="alert">Error en la modificación de los datos del
+					usuario</div>
+				<div id="modificar-exito" class="alert alert-success d-none"
+					role="alert">Modificación de los datos del usuario realizada
+					correctamente</div>
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<button class="btn btn-danger" id="eliminar-cuenta-btn"
+				data-toggle="modal" data-target="#eliminar-cuenta-modal">Eliminar
+				cuenta</button>
+		</div>
+		<div class="modal fade" id="eliminar-cuenta-modal" tabindex="-1"
+			role="dialog" aria-labelledby="eliminar-cuenta-modal-label"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="eliminar-cuenta-modal-header">¿Eliminar
+							cuenta?</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">Eliminar una cuenta es una acción que
+						no se puede restaurar. ¿Está seguro/a?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-danger"
+							id="aceptar-eliminar-cuenta-btn">Eliminar cuenta</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script src="./js/main.js"></script>
+	<script src="./js/profile.js"></script>
+</body>
+
+</html>
