@@ -73,12 +73,11 @@ const registrarUsuario = () => {
 				}
 			},
 			error: (result) => {
-				let parsedResult = JSON.parse(result);
-
-				console.log("Error en la creación de la cuenta con resultado: " + parsedResult);
+				$("#register-error").removeClass("d-none");
 			},
 		});
 	} else {
+		$("#register-error").html("Las contraseñas no coinciden");
 		$("#register-error").removeClass("d-none");
 	}
 }
