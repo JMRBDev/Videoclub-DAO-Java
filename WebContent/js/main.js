@@ -17,6 +17,9 @@ $(document).ready(() => {
 			$("#mi-perfil-btn").attr("href", `profile.html?username=${username}`);
 
 			getPeliculas(false, "ASC");
+			
+			
+			$("#ordenar-genero").click(() => ordenarPeliculas());
 		});
 	}
 });
@@ -128,6 +131,7 @@ const mostrarPeliculas = (peliculas) => {
                 <td>${precio}€</td>
                 <td><button onclick="alquilarPelicula(${pelicula.id}, ${precio});"
                         class="btn btn-success ${user.saldo < precio ? "disabled" : null}"
+						${user.saldo < precio ? "disabled" : null}
                         ${user.saldo < precio ? 'data-toggle="tooltip" data-placement="top" title="No dispone de créditos suficientes"' : null}
                         >Alquilar</button></td>
                 </tr>
