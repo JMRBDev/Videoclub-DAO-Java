@@ -107,6 +107,11 @@ public class Pelicula {
 		this.estreno = estreno;
 		this.fechaAlquiler = fechaAlquiler;
 	}
+	
+	public Pelicula(int id, int copias) {
+		this.id = id;
+		this.copias = copias;
+	}
 
 	public Pelicula() {
 		super();

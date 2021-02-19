@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.jmrbdev.videoclub.connection.DBConnection;
@@ -159,6 +161,68 @@ public class UsuarioDAO implements IUsuarioDAO {
 				return e.getMessage();
 			}
 		}
+		return "false";
+	}
+
+	@Override
+	public String verCopias(String username) {
+		// Ver el número de copias de un usuario: SELECT id, count(*) as num_reservas
+		// FROM alquilar WHERE username = [username] GROUP BY id;
+
+		DBConnection con = new DBConnection();
+		String sql = "SELECT id, count(*) as num_copias FROM alquilar WHERE username = '" + username + "' GROUP BY id;";
+
+		HashMap<Integer, Integer> copias = new HashMap<Integer, Integer>();
+
+		if (username != null && username != "") {
+			try {
+				Statement st = con.getConnection().createStatement();
+				ResultSet rs = st.executeQuery(sql);
+
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					int num_copias = rs.getInt("num_copias");
+
+					copias.put(id, num_copias);
+				}
+
+				devolverPeliculas(username, copias);
+
+				return "true";
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}
+
+		return "false";
+	}
+
+	@Override
+	public String devolverPeliculas(String username, HashMap<Integer, Integer> peliculas) {
+		// Ver el número de copias de un usuario: SELECT id, count(*) as num_reservas
+		// FROM alquilar WHERE username = [username] GROUP BY id;
+
+		DBConnection con = new DBConnection();
+
+		if (username != null && username != "") {
+			try {
+				for (Map.Entry<Integer, Integer> pelicula : peliculas.entrySet()) {
+					Integer id = pelicula.getKey();
+					Integer num_copias = pelicula.getValue();
+
+					String sql = "UPDATE peliculas SET copias = (SELECT copias + " + num_copias
+							+ " FROM peliculas WHERE id = " + id + ") WHERE id = " + id + ";";
+
+					Statement st = con.getConnection().createStatement();
+					st.executeQuery(sql);
+				}
+				
+				this.eliminar(username);
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}
+
 		return "false";
 	}
 

@@ -111,6 +111,8 @@ const mostrarHistorial = (peliculas) => {
         <td>${pelicula.genero}</td>
         <td><input type="checkbox" name="estreno" id="estreno${pelicula.id}" disabled ${pelicula.estreno ? "checked" : ""}></td>
         <td>${pelicula.fechaAlquiler}</td>
+		<td><button class="btn btn-danger" id="devolver-btn"
+		onclick="devolverPelicula(${pelicula.id})">Devolver película</button></td>
         </tr>
         `;
 		});
@@ -123,4 +125,26 @@ const mostrarHistorial = (peliculas) => {
 		$("#historial-vacio").removeClass("d-none");
 		$("#historial-table").addClass("d-none");
 	}
+}
+
+const devolverPelicula = (id) => {
+	$.ajax({
+		type: "GET",
+		dataType: "html",
+		url: "./ServletPeliculaDevolver",
+		data: $.param({
+			username: username,
+			id: id,
+		}),
+		success: (result) => {
+			if (result === false) {
+				console.log("Error devolviendo la película");
+			} else {
+				location.reload();
+			}
+		},
+		error: (result) => {
+			console.log("Error devolviendo la película con resultado: " + result);
+		},
+	});
 }

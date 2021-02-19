@@ -1,5 +1,7 @@
 package com.jmrbdev.videoclub.dao;
 
+import java.util.HashMap;
+
 public interface IUsuarioDAO {
 	public String login(String username, String contrasena);
 
@@ -8,12 +10,17 @@ public interface IUsuarioDAO {
 
 	public String pedir(String username);
 
-	String modificar(String username, String nuevaContrasena, String nuevoNombre, String nuevosApellidos,
+	public String modificar(String username, String nuevaContrasena, String nuevoNombre, String nuevosApellidos,
 			String nuevoEmail, Double nuevoSaldo, Boolean nuevoPremium);
 
-	String restarDinero(String username, Double nuevoSaldo);
+	public String eliminar(String username);
 
-	String listarPeliculas(String username);
+	public String verCopias(String username);
 
-	String eliminar(String username);
+	public String devolverPeliculas(String username, HashMap<Integer, Integer> peliculas);
+
+	public String restarDinero(String username, Double nuevoSaldo);
+
+	public String listarPeliculas(String username);
+
 }

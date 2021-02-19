@@ -6,4 +6,8 @@ public interface IPeliculaDAO {
 	public String alquilar(int id, String username);
 
 	public String modificar(int id);
+
+	String devolver(int id, String username);
+
+	String sumarCantidad(int id);
 }

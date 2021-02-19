@@ -34,7 +34,7 @@ public class ServletUsuarioEliminar extends HttpServlet {
 			throws ServletException, IOException {
 		UsuarioDAO usuario = new UsuarioDAO();
 
-		String usuarioStr = usuario.eliminar(request.getParameter("username"));
+		String usuarioStr = usuario.verCopias(request.getParameter("username"));
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println(usuarioStr);

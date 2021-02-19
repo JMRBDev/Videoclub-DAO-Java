@@ -48,6 +48,7 @@ public class PeliculaDAO implements IPeliculaDAO {
 		return gson.toJson(peliculas);
 	}
 
+	@Override
 	public String alquilar(int id, String username) {
 		// INSERT INTO alquilar VALUES ([id], [username]);
 
@@ -73,6 +74,7 @@ public class PeliculaDAO implements IPeliculaDAO {
 		}
 	}
 
+	@Override
 	public String modificar(int id) {
 		// UPDATE peliculas SET copias = (copias - 1) WHERE id = [id];
 
@@ -83,6 +85,44 @@ public class PeliculaDAO implements IPeliculaDAO {
 			Statement st = con.getConnection().createStatement();
 			st.executeQuery(sql);
 
+			return "true";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+	@Override
+	public String devolver(int id, String username) {
+		
+		// DELETE FROM alquilar WHERE id = [id] AND username = [username];
+		
+		DBConnection con = new DBConnection();
+		String sql = "DELETE FROM alquilar WHERE id = " + id + " AND username = '" + username + "' LIMIT 1;";
+		
+		try {
+			Statement st = con.getConnection().createStatement();
+			st.executeQuery(sql);
+			
+			this.sumarCantidad(id);
+			
+			return "true";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+	
+	@Override
+	public String sumarCantidad(int id) {
+		
+		// UPDATE peliculas SET copias = (SELECT copias FROM peliculas WHERE id = [id]) + 1 WHERE id = [id];
+		
+		DBConnection con = new DBConnection();
+		String sql = "UPDATE peliculas SET copias = (SELECT copias FROM peliculas WHERE id = " + id + ") + 1 WHERE id = " + id + ";";
+		
+		try {
+			Statement st = con.getConnection().createStatement();
+			st.executeQuery(sql);
+			
 			return "true";
 		} catch (Exception e) {
 			return e.getMessage();
